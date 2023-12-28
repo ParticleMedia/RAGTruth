@@ -1,2 +1,2 @@
 # RAGTruth
-Github repository for "RAGTruth: A Hallucination Evaluation Corpus for Developing Trustworthy Retrieval-Augmented Language Models"
+Github repository for "RAGTruth: A Corpus for Developing Trustworthy Retrieval-Augmented Language Models"
