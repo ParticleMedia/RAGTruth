@@ -5,7 +5,9 @@ RAGTruth is a word-level hallucination corpus in various tasks within the Retrie
 
 RAG has become a main technique for alleviating hallucinations in large language models (LLMs). Despite the integration of RAG, LLMs may still present unsupported or contradictory claims to the retrieved contents. In order to develop effective hallucination prevention strategies under RAG, it is important to create benchmark datasets that can measure the extent of hallucination. RAGTruth comprises nearly 18,000 naturally generated responses from diverse LLMs using RAG. These responses have undergone meticulous manual annotations at both the individual cases and word levels, incorporating evaluations of hallucination intensity.
 
-
+## Updates
+1. [2024/02] We updated the data: we included more annotated hallucinations and added one new meta, `implicit_true`.
+2. [2024/01] We released the [RAGTruth corpus].
 ## Dataset
 Given that each piece of source information elicits six distinct responses from various Language Models, we publish the source information and its corresponding responses individually.
 
@@ -17,7 +19,7 @@ Given that each piece of source information elicits six distinct responses from 
 | source_id         | String     | The index of the source information.  |
 | model   | String      | The model that generates the response.  |
 | temperature           | Float      | The temperature when generating response.          |
-| labels           |List[Dict]      | The hallucination spans. `text` is the hallucination itself; `start` & `end` are the position of hallucination span in the response; `label_type` is the type of the hallucination span. `due_to_null` means whether the hallucination is caused by null value. `meta` is the comment of the hallucination given by annotators.      |
+| labels           |List[Dict]      | The hallucination spans. `text` is the hallucination itself; `start` & `end` are the position of hallucination span in the response; `label_type` is the type of the hallucination span. `due_to_null` means whether the hallucination is caused by null value. `implicit_true` means this span is correct while the info is not mentioned in the context. `meta` is the comment of the hallucination given by annotators.      |
 | split           | String      |  `train` or `test`           |
 | quality          | String      | Indicate whether this answer has quality issues. `incorrect_refusal` means the model mistakenly refuses to answer despite the presence of the relevant context. `truncated` means the response is truncated unexpectedly.    |
 | response      | String      | The response of LLMs given a certain instruction.  |
@@ -59,12 +61,12 @@ QA sample:
 {
   "source_id": "14312",
   "task_type": "QA",
-  "source": "MS MARCO",
+  "source": "MARCO",
   "source_info": {
     "question": "how to prepare beets and beet greens",
     "passages": "passage 1:Procedures: 1  Preheat oven to 350 degrees Fahrenheit. 2  Wash beets thoroughly, leaving skins on. 3  Place beets in a small baking dish or roasting pan, toss with 2 tablespoons of coconut oil, cover and bake for 45 to 60 minutes or until tender.  For the greens: heat remaining coconut oil in a skillet over medium-low heat.\n\npassage 2:Serve with red wine vinegar or butter and salt and pepper. For the greens: heat remaining coconut oil in a skillet over medium-low heat. Add garlic and onion and cook for one minute. Tear the beet greens into 2 to 3 inch pieces, and add to skillet, stirring until wilted and tender. Season with salt and pepper.\n\npassage 3:Directions See How It's Made. 1  Wash the greens thoroughly several times in deep water. Cook in very little boiling salted water until just tender, a few minutes. 2  Submit a Correction.\n\n"
   },
-  "prompt": "Briefly answer the following question:\nhow to prepare beets and beet greens\nBear in mind that your response should be strictly based on the following three passages:\npassage 1:Procedures: 1  Preheat oven to 350 degrees Fahrenheit. 2  Wash beets thoroughly, leaving skins on. 3  Place beets in a small baking dish or roasting pan, toss with 2 tablespoons of coconut oil, cover and bake for 45 to 60 minutes or until tender.  For the greens: heat remaining coconut oil in a skillet over medium-low heat.\n\npassage 2:Serve with red wine vinegar or butter and salt and pepper. For the greens: heat remaining coconut oil in a skillet over medium-low heat. Add garlic and onion and cook for one minute. Tear the beet greens into 2 to 3 inch pieces, and add to skillet, stirring until wilted and tender. Season with salt and pepper.\n\npassage 3:Directions See How It's Made. 1  Wash the greens thoroughly several times in deep water. Cook in very little boiling salted water until just tender, a few minutes. 2  Submit a Correction.\n\nIn case the passages do not contain the necessary information to answer the question, please reply with: \"Unable to answer based on given passages.\"\noutput:"
+  "prompt": "Briefly answer the following question:\nhow to prepare beets and beet greens\nBear in mind that your response should be strictly based on the following ten passages:\npassage 1:Procedures: 1  Preheat oven to 350 degrees Fahrenheit. 2  Wash beets thoroughly, leaving skins on. 3  Place beets in a small baking dish or roasting pan, toss with 2 tablespoons of coconut oil, cover and bake for 45 to 60 minutes or until tender.  For the greens: heat remaining coconut oil in a skillet over medium-low heat.\n\npassage 2:Serve with red wine vinegar or butter and salt and pepper. For the greens: heat remaining coconut oil in a skillet over medium-low heat. Add garlic and onion and cook for one minute. Tear the beet greens into 2 to 3 inch pieces, and add to skillet, stirring until wilted and tender. Season with salt and pepper.\n\npassage 3:Directions See How It's Made. 1  Wash the greens thoroughly several times in deep water. Cook in very little boiling salted water until just tender, a few minutes. 2  Submit a Correction.\n\nIn case the passages do not contain the necessary information to answer the question, please reply with: \"Unable to answer based on given passages.\"\noutput:"
 }
 ```
 
@@ -154,27 +156,27 @@ Summary sample:
 
 Task                  | Instances | Responses | Hallucination Responses | Hallucination Spans |
 --- | --- | --- | --- | --- |
-Summarization(CNN/DM)      | 628  | 3768   | 1157 | 1434 |
-Summarization(Recent News) | 316  | 1896   | 501  | 575 |
-Question Answering         | 991  | 5946   | 1356 | 2122 |
-Data-to-text               | 1036 | 6216  | 4136 | 8477 |
-Overall                    | 2971 | 17826 | 7150 | 12608 |
+Summarization(CNN/DM)      | 628  | 3768   | 1165 | 1474 |
+Summarization(Recent News) | 315  | 1890   | 521  | 598 |
+Question Answering         | 989  | 5934   | 1724 | 2927 |
+Data-to-text               | 1033 | 6198  | 4254 | 9290 |
+Overall                    | 2965 | 17790 | 7664 | 14289 |
 
 
 #### Descriptive Statistics Devided by LLMs
 
 Model | Hallucination Responses | Hallucination Spans |
 --- | --- | --- |
-GPT-3.5-turbo-0613  | 357  | 460  |
-GPT-4-0613          | 379  | 451  |
-Llama-2-7B-chat     | 1713 | 2871 |
-Llama-2-13B-chat    | 1588 | 3373 |
-Llama-2-70B-chat    | 1271 | 2167 |
-Mistral-7B-Instruct | 1842 | 3286 |
+GPT-3.5-turbo-0613  | 401  | 533  |
+GPT-4-0613          | 406  | 485  |
+Llama-2-7B-chat     | 1832 | 3302 |
+Llama-2-13B-chat    | 1677 | 3799 |
+Llama-2-70B-chat    | 1395 | 2608 |
+Mistral-7B-Instruct | 1953 | 3562 |
 
 ## Citation
 
-Please cite our [paper](https://arxiv.org/abs/2401.00396) if you use our dataset:
+Please cite our paper if you use our dataset:
 ```bibtex
 @misc{wu2023ragtruth,
       title={RAGTruth: A Hallucination Corpus for Developing Trustworthy Retrieval-Augmented Language Models}, 
