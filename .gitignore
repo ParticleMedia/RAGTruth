@@ -1,3 +1,5 @@
+baseline/*.jsonl
+baseline/exp/
 .DS_Store
 eda.ipynb
 # Byte-compiled / optimized / DLL files
