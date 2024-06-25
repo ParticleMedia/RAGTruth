@@ -6,8 +6,9 @@ RAGTruth is a word-level hallucination corpus in various tasks within the Retrie
 RAG has become a main technique for alleviating hallucinations in large language models (LLMs). Despite the integration of RAG, LLMs may still present unsupported or contradictory claims to the retrieved contents. In order to develop effective hallucination prevention strategies under RAG, it is important to create benchmark datasets that can measure the extent of hallucination. RAGTruth comprises nearly 18,000 naturally generated responses from diverse LLMs using RAG. These responses have undergone meticulous manual annotations at both the individual cases and word levels, incorporating evaluations of hallucination intensity.
 
 ## Updates
-1. [2024/02] We updated the data: we included more annotated hallucinations and added one new meta, `implicit_true`.
-2. [2024/01] We released the RAGTruth corpus.
+1. [2024/06] We released our training and evaluation code.
+2. [2024/02] We updated the data: we included more annotated hallucinations and added one new meta, `implicit_true`.
+3. [2024/01] We released the RAGTruth corpus.
 ## Dataset
 Given that each piece of source information elicits six distinct responses from various Language Models, we publish the source information and its corresponding responses individually.
 
