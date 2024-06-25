@@ -1,0 +1,4 @@
+{
+    "use_orig_params": "False",
+    "activation_checkpointing": "True"
+}

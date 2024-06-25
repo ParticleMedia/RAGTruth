@@ -36,16 +36,16 @@ CUDA_VISIBLE_DEVICES=4,5,6,7 torchrun --nnodes 1 --nproc_per_node 4 train.py \
 --save_steps 10000 \
 --save_total_limit 2 \
 --overwrite_output_dir \
---evaluation_strategy steps \
+--eval_strategy steps \
 --eval_steps 80 \
---fsdp "shard_grad_op offload auto_wrap" \
+--fsdp "shard_grad_op auto_wrap" \
 --fsdp_config ./configs/fsdp.json
 ```
 
 3. Evaluate model. We use `text-generation-inference` to serve the model.
 ```
 model_path=baseline
-docker run -d --name sentence --gpus '"device=0"' -v $PWD:/data --shm-size 1g -p 8300:80 ghcr.io/huggingface/text-generation-inference:2.0.1 --model-id /data/exp/$model_path --dtype bfloat16 --max-total-tokens 8000 --sharded false --max-input-length 4095
+docker run -d --name baseline --gpus '"device=7"' -v $PWD:/data --shm-size 1g -p 8300:80 ghcr.io/huggingface/text-generation-inference:2.0.1 --model-id /data/exp/$model_path --dtype bfloat16 --max-total-tokens 8000 --sharded false --max-input-length 4095
 
 python predict_and_evaluate.py --model_name $model_path --tokenizer meta-llama/Llama-2-13b-hf
 ```

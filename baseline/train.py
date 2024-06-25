@@ -44,7 +44,6 @@ class ModelArguments:
     
 @dataclass
 class DataArguments:
-    dataset: str = field(default='sentence_detect', metadata={"help": "dataset name"})
     train_file: str = field(default=None)
     eval_file: str = field(default=None)
     use_system_prompt: bool = field(default=False)
