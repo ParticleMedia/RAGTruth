@@ -188,3 +188,7 @@ Please cite our paper if you use our dataset:
       primaryClass={cs.CL}
 }
 ```
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ParticleMedia/RAGTruth&type=Date)](https://star-history.com/#ParticleMedia/RAGTruth&Date)
